@@ -2428,6 +2428,12 @@ export const nivo_barchart_data = [
 
 export const nivo_piechart_data = [
   {
+    id: "hoge",
+    label: "hoge",
+    value: 229,
+    color: "hsl(69, 70%, 50%)",
+  },
+  {
     id: "elixir",
     label: "elixir",
     value: 141,
