@@ -1,6 +1,7 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
 import axios from "axios";
+import { random_elem } from "../api";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -18,10 +19,6 @@ function CustomPieChart() {
     });
   }, []);
 
-  function random_idx(households: HouseholdType[]) {
-    return Math.floor(Math.random() * households.length);
-  }
-
   /**
    * create fill data by categories
    *
@@ -30,14 +27,12 @@ function CustomPieChart() {
    */
   function createFillByCategories(categories: CategoryType[]): FillType[] {
     // id should have dots, lines, squares
-    const random_pattern = (): string => {
-      const patterns = ["dots", "lines", "squares"];
-      return patterns[Math.floor(Math.random() * patterns.length)];
-    };
-
     const res: FillType[] = [];
     categories.forEach((c) => {
-      res.push({ match: { id: c.name }, id: random_pattern() });
+      res.push({
+        match: { id: c.name },
+        id: random_elem(["dots", "lines", "squares"]),
+      });
     });
 
     return res;
@@ -66,7 +61,7 @@ function CustomPieChart() {
     });
 
     for (let i = 0; i < 30; ++i) {
-      const random_households = households[random_idx(households)];
+      const random_households = random_elem(households);
       res.map((r) => {
         if (random_households.category.name == r.id) {
           r.value += random_households.amount;
