@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import VictoryIndex from "./VictoryChart";
 import "./index.css";
+import VisIndex from "./Vis";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
       {
         path: "/victory",
         element: <VictoryIndex />,
+      },
+      {
+        path: "/vis",
+        element: <VisIndex />,
       },
     ],
   },
