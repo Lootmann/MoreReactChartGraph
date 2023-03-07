@@ -11,6 +11,11 @@ type HouseholdType = {
   category: CategoryType;
 };
 
+type PropType = {
+  categories: CategoryType[];
+  households: HouseholdType[];
+};
+
 type FillType = {
   match: {
     id: string;
