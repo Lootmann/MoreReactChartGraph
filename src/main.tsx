@@ -6,20 +6,16 @@ import App from "./App";
 import VictoryIndex from "./VictoryChart";
 import "./index.css";
 import VisIndex from "./Vis";
+import NivoIndex from "./Nivo";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "/victory",
-        element: <VictoryIndex />,
-      },
-      {
-        path: "/vis",
-        element: <VisIndex />,
-      },
+      { path: "/victory", element: <VictoryIndex /> },
+      { path: "/vis", element: <VisIndex /> },
+      { path: "/nivo", element: <NivoIndex /> },
     ],
   },
 ]);

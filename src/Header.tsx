@@ -12,6 +12,9 @@ function Header() {
         React-vis
       </Link>
 
+      <Link to={"/nivo"} className="hover:bg-yellow-600 px-2 rounded-md">
+        Nivo
+      </Link>
       <p>Header</p>
       <p>Header</p>
     </div>
