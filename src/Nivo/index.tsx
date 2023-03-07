@@ -2,6 +2,7 @@ import React from "react";
 import BarChart from "./BarChart";
 import PieChart from "./PieChart";
 import CustomPieChart from "./CustomPieChart";
+import CustomBarChart from "./CustomBarChart";
 
 function NivoIndex() {
   return (
@@ -22,7 +23,7 @@ function NivoIndex() {
         </div>
 
         <div className="flex-1 p-2 bg-blue-800">
-          <h2>hoge</h2>
+          <CustomBarChart />
         </div>
       </div>
     </div>
