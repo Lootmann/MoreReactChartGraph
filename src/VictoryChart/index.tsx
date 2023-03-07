@@ -8,12 +8,20 @@ function VictoryIndex() {
         <div className="flex-1 p-2 bg-red-700">
           <PieChart />
         </div>
-        <div className="flex-1 p-2">hoge</div>
+
+        <div className="flex-1 p-2">
+          <PieChart />
+        </div>
       </div>
 
       <div className="flex-1 h-full w-full flex justify-between bg-green-600">
-        <div className="flex-1 p-2">hoge</div>
-        <div className="flex-1 p-2 bg-blue-800">hoge</div>
+        <div className="flex-1 p-2">
+          <PieChart />
+        </div>
+
+        <div className="flex-1 p-2 bg-blue-800">
+          <PieChart />
+        </div>
       </div>
     </div>
   );
