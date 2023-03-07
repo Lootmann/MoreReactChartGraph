@@ -1,20 +1,6 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
-import { nivo_piechart_data } from "../util";
 import axios from "axios";
-
-type CategoryType = {
-  id: number;
-  name: string;
-};
-
-type HouseholdType = {
-  id: number;
-  amount: number;
-  registered_at: string;
-  memo: string;
-  category: CategoryType;
-};
 
 const BASE_URL = "http://localhost:3000";
 
@@ -36,39 +22,41 @@ function CustomPieChart() {
     return Math.floor(Math.random() * households.length);
   }
 
-  function createFillByCategories(categories: CategoryType[]) {
-    /**
-      [
-          { match: { id: "AkEFYD" }, id: "dots" },
-          { match: { id: "ruby" }, id: "dots" },
-          { match: { id: "c" }, id: "dots" },
-          { match: { id: "go" }, id: "dots" },
-          { match: { id: "python" }, id: "dots" },
-          { match: { id: "scala" }, id: "lines" },
-          { match: { id: "lisp" }, id: "lines" },
-          { match: { id: "elixir" }, id: "lines" },
-          { match: { id: "javascript" }, id: "lines" },
-        ] 
- *  */
-    const res = [
-      categories.map((c) => {
-        return { match: { id: c.name }, id: "dots" };
-      }),
-    ];
-    console.log(typeof res);
-    console.dir(res);
+  /**
+   * create fill data by categories
+   *
+   * @param {CategoryType[]} categories
+   * @return {FillType[]}
+   */
+  function createFillByCategories(categories: CategoryType[]): FillType[] {
+    // id should have dots, lines, squares
+    const random_pattern = (): string => {
+      const patterns = ["dots", "lines", "squares"];
+      return patterns[Math.floor(Math.random() * patterns.length)];
+    };
+
+    const res: FillType[] = [];
+    categories.forEach((c) => {
+      res.push({ match: { id: c.name }, id: random_pattern() });
+    });
+
     return res;
   }
 
-  // convert households data to nivo's records
-  function conv(categories: CategoryType[], households: HouseholdType[]) {
-    // {
-    //   id: "hoge",
-    //   label: "hoge",
-    //   value: 229,
-    //   color: "hsl(69, 70%, 50%)",
-    // },
-    const res = categories.map((c) => {
+  /**
+   * function conv
+   * convert households data to nivo's records
+   * set type hint to everything. It's not even readably :^)
+   *
+   * @param {CategoryType[]} categories
+   * @param {HouseholdType[]} households
+   * @return {ConvType[]}
+   */
+  function conv(
+    categories: CategoryType[],
+    households: HouseholdType[]
+  ): ConvType[] {
+    const res: ConvType[] = categories.map((c) => {
       return {
         id: c.name,
         label: c.name,
@@ -95,7 +83,7 @@ function CustomPieChart() {
         <ResponsivePie
           data={conv(categories, households)}
           theme={{
-            legends: { text: { fontSize: 12 } },
+            // legends: { text: { fontSize: 10 } },
             labels: { text: { fontSize: 14 } },
           }}
           margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
@@ -137,8 +125,7 @@ function CustomPieChart() {
               spacing: 10,
             },
           ]}
-          // fill={createFillByCategories(categories)}
-          fill={[{ match: { id: "NRmEnV" }, id: "dots" }]}
+          fill={createFillByCategories(categories)}
           legends={[
             {
               anchor: "bottom",
