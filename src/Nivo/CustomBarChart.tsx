@@ -1,5 +1,5 @@
 import React from "react";
-import { ResponsiveBarCanvas } from "@nivo/bar";
+import { ResponsiveBar } from "@nivo/bar";
 import { random_households } from "../api";
 
 function CustomBarChart({ categories, households }: PropType) {
@@ -12,23 +12,10 @@ function CustomBarChart({ categories, households }: PropType) {
   }
 
   /**
- * 
- * data = [
-      {
-        country: "AD",
-        "hot dog": 3,
-        burger: 141,
-        ...
-      },
-  ]
- * 
- */
-  /**
    * @returns {[{string: number}]}
    */
-  function create_data() {
+  function create_data(): [{ string: number }] {
     const rand_households: HouseholdType[] = random_households(households, 100);
-    console.log(rand_households);
 
     // init by categories
     const category_amounts = new Map<string, number>();
@@ -46,7 +33,7 @@ function CustomBarChart({ categories, households }: PropType) {
     const obj: any = {};
     obj["Expences"] = "My Cash";
     for (const [key, value] of category_amounts) {
-      obj[key] = value;
+      obj[key] = Math.floor(value / 100);
     }
     return [obj];
   }
@@ -54,23 +41,37 @@ function CustomBarChart({ categories, households }: PropType) {
   return (
     <div className="h-full">
       {categories.length !== 0 && households.length !== 0 && (
-        <ResponsiveBarCanvas
+        <ResponsiveBar
           data={create_data()}
           keys={create_key_by_categories()}
-          indexBy="Expences"
-          margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
-          pixelRatio={1.100000023841858}
-          padding={0.15}
+          // indexBy="Expences"
+          theme={{
+            fontSize: 20,
+            axis: { ticks: { text: { fontSize: 20 } } },
+            // legends: { text: { fontSize: 10 }, },
+          }}
+          legends={[
+            {
+              dataFrom: "keys",
+              anchor: "right",
+              direction: "column",
+              itemWidth: 10,
+              itemHeight: 25,
+            },
+          ]}
+          margin={{ top: 50, right: 120, bottom: 50, left: 60 }}
+          padding={0.2}
           innerPadding={0}
           minValue="auto"
-          maxValue="auto"
+          maxValue={50000}
           groupMode="stacked"
           // bar direction
           layout="horizontal"
           reverse={false}
           valueScale={{ type: "linear" }}
           indexScale={{ type: "band", round: true }}
-          colors={{ scheme: "red_blue" }}
+          // bar color
+          colors={{ scheme: "set3" }}
           colorBy="id"
           borderWidth={0}
           borderRadius={0}
@@ -78,14 +79,16 @@ function CustomBarChart({ categories, households }: PropType) {
             from: "color",
             modifiers: [["darker", 1.6]],
           }}
-          axisTop={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: "",
-            legendOffset: 36,
-          }}
+          // axisTop={{
+          //   tickSize: 5,
+          //   tickPadding: 5,
+          //   tickRotation: 0,
+          //   legend: "",
+          //   legendOffset: 36,
+          //   tickValues: [0, 5000, 10000, 15000, 20000],
+          // }}
           axisRight={null}
+          axisBottom={null}
           // axisBottom={{
           //   tickSize: 5,
           //   tickPadding: 5,
@@ -97,14 +100,13 @@ function CustomBarChart({ categories, households }: PropType) {
           // axisLeft={{
           //   tickSize: 5,
           //   tickPadding: 5,
-          //   tickRotation: 0,
-          //   legend: "axisLeft Legend",
+          //   tickRotation: 10,
           //   legendPosition: "middle",
           //   legendOffset: -40,
           // }}
-          enableGridX={true}
+          enableGridX={false}
           enableGridY={false}
-          // enableLabel={true}
+          enableLabel={true}
           labelSkipWidth={12}
           labelSkipHeight={12}
           labelTextColor={{
@@ -112,7 +114,6 @@ function CustomBarChart({ categories, households }: PropType) {
             modifiers: [["darker", 3.0]],
           }}
           isInteractive={true}
-          legends={[]}
         />
       )}
     </div>
